@@ -17,7 +17,6 @@ export class CustomerExistsGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     return this.checkStore().pipe(
       switchMap(() => {
-        console.log(route.params);
         const id = +route.params.id;
         return this.hasCustomer(id);
         // if (this.hasCustomer(id)) {

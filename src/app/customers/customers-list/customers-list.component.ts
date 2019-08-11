@@ -27,7 +27,10 @@ export class CustomersListComponent implements OnInit {
   }
 
   scrollIntoForm() {
-    document.getElementById('form').scrollIntoView();
+    const element = document.getElementById('form');
+    if (element) {
+      element.scrollIntoView();
+    }
   }
 
 }

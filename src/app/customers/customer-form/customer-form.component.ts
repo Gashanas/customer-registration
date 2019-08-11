@@ -40,6 +40,7 @@ export class CustomerFormComponent implements OnInit {
       map(customer => {
         if (customer) {
           this.customerForm.setValue(customer);
+          this.isAddressValid = true;
         }
         return customer;
       })
@@ -68,6 +69,7 @@ export class CustomerFormComponent implements OnInit {
 
   findLocation() {
     if (this.customerForm.get('address').valid) {
+      this.isAddressValid = false;
       const {street, houseNumber, city, zipCode} = this.customerForm.get('address').value as Address;
       const address = street + ' ' + houseNumber + ' ' + city + ' ' + zipCode;
       this.mapsService.findLocation(address).subscribe(res => {
@@ -77,7 +79,6 @@ export class CustomerFormComponent implements OnInit {
         if (this.checkIfAddressMatch(res[0])) {
           this.isAddressValid = true;
         } else {
-          this.isAddressValid = false;
           this.addressSuggestion = res[0].formatted_address;
           this.suggestedAddress = {
             street: res[0].address_components[1].long_name,
@@ -87,7 +88,6 @@ export class CustomerFormComponent implements OnInit {
           };
         }
         this.cd.detectChanges();
-        console.log('repsonse', res);
       }, error => {
         this.error = error;
         this.cd.detectChanges();

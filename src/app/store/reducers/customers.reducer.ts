@@ -36,8 +36,6 @@ export const reducer = createReducer(
     customers: payload
   })),
   on(addCustomerAction, (state, {payload}) => {
-    console.log(JSON.stringify(state));
-    console.log(payload);
     let customers;
     if (!state.customers) {
       customers = [...initialState.customers, payload];
@@ -68,7 +66,6 @@ export const reducer = createReducer(
     };
   }),
   on(updateCustomerAction, (state, {payload}) => {
-    console.log('id', payload);
     const customers = state.customers.map((item, id) => id === payload.id ? payload : item);
     return {
       ...state,

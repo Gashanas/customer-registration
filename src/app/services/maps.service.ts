@@ -24,7 +24,6 @@ export class MapsService {
             observer.next(results);
             observer.complete();
           } else {
-            console.log('Geocoding service: geocoder failed due to: ' + status);
             observer.error('Your entered address is invalid');
           }
         })

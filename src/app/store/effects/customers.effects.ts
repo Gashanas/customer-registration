@@ -21,7 +21,6 @@ export class CustomersEffects {
       ofType(addCustomerAction, removeCustomerAction, updateCustomerAction),
       withLatestFrom(this.store.select(getCustomers)),
       map(([action, state]) => {
-        console.log(state);
         localStorage.setItem('customers', JSON.stringify(state));
       }),
     ), {dispatch: false}
@@ -42,7 +41,6 @@ export class CustomersEffects {
       ofType(getCustomersAction),
       map(() => {
         const customers = JSON.parse(localStorage.getItem('customers'));
-        console.log('parsed: ', customers);
         return getCustomersSuccessAction(customers);
       })
     )

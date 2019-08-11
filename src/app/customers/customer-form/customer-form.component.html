@@ -1,7 +1,6 @@
 <mat-card id="form">
   <h2 *ngIf="!(selectedCustomer$ | async)">Add customer </h2>
   <h2 *ngIf="selectedCustomer$ | async as customer">Update information about {{customerForm.get('fullName').value}}</h2>
-  <h3>{{selectedCustomer$| async | json}}</h3>
   <form [formGroup]="customerForm">
     <h3>Customer information:</h3>
     <mat-form-field class="example-full-width">
@@ -55,7 +54,7 @@
         </mat-error>
       </mat-form-field>
       <mat-error *ngIf="error">{{error}}</mat-error>
-      <mat-error *ngIf="addressSuggestion">
+      <mat-error *ngIf="addressSuggestion && !error">
         Your entered address is not correct
       </mat-error>
       <mat-card class="suggestion-picker" *ngIf="addressSuggestion">
