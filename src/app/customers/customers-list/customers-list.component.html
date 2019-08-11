@@ -1,0 +1,29 @@
+<h2>Registered customers: </h2>
+<div>
+  <div *ngIf="customers$ | async as customers" class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div *ngFor="let customer of customers; let i = index;" class="mdc-layout-grid__cell">
+        <mat-card>
+          <h3>Customer info:</h3>
+          <div class="details-container">
+            <span><strong>Name:</strong> {{customer.fullName}}</span>
+            <span><strong>Email:</strong> {{customer.email}}</span>
+          </div>
+          <h3>Address: </h3>
+          <div class="details-container">
+            <span><strong>City:</strong> {{customer.address.city}}</span>
+            <span><strong>Street:</strong> {{customer.address.street}}</span>
+          </div>
+          <div class="details-container">
+            <span><strong>House Number:</strong> {{customer.address.houseNumber}}</span>
+            <span><strong>Zip code:</strong> {{customer.address.zipCode}}</span>
+          </div>
+          <div class="buttons-group">
+            <button mat-raised-button color="warn" (click)="removeCustomer(i)">Remove</button>
+            <button mat-raised-button class="mdc-layout-grid--align-right" (click)="scrollIntoForm()" [routerLink]="[i]">Edit</button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

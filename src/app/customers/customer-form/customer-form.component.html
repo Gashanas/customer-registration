@@ -1,0 +1,73 @@
+<mat-card id="form">
+  <h2 *ngIf="!(selectedCustomer$ | async)">Add customer </h2>
+  <h2 *ngIf="selectedCustomer$ | async as customer">Update information about {{customerForm.get('fullName').value}}</h2>
+  <h3>{{selectedCustomer$| async | json}}</h3>
+  <form [formGroup]="customerForm">
+    <h3>Customer information:</h3>
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="fullName" placeholder="Full name *">
+      <mat-error *ngIf="customerForm.get('fullName').hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="customerForm.get('fullName').hasError('minlength')">
+        Name should be at least 3 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="email" placeholder="Email *">
+      <mat-error *ngIf="customerForm.get('email').hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="customerForm.get('email').hasError('incorrectMailFormat')">
+        Your email adress has invalid format. Valid example: name@smth.c
+      </mat-error>
+    </mat-form-field>
+
+    <h3>Address: </h3>
+    <div formGroupName="address">
+      <mat-form-field class="example-full-width">
+        <input matInput formControlName="city" placeholder="City *" (blur)="findLocation()">
+        <mat-error *ngIf="customerForm.get('address').get('city').hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput formControlName="street" placeholder="Street *" (blur)="findLocation()">
+        <mat-error *ngIf="customerForm.get('address').get('city').hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput formControlName="houseNumber" placeholder="House number *" type="number"
+               (blur)="findLocation()">
+        <mat-error *ngIf="customerForm.get('address').get('city').hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput formControlName="zipCode" placeholder="Zip code *" type="number" (blur)="findLocation()">
+        <mat-error *ngIf="customerForm.get('address').get('city').hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="error">{{error}}</mat-error>
+      <mat-error *ngIf="addressSuggestion">
+        Your entered address is not correct
+      </mat-error>
+      <mat-card class="suggestion-picker" *ngIf="addressSuggestion">
+        Do you mean this?
+        {{addressSuggestion}}
+        <button mat-raised-button (click)="takeSuggestion()">Select this</button>
+      </mat-card>
+    </div>
+  </form>
+
+  <button mat-raised-button (click)="addCustomer()" *ngIf="!(selectedCustomer$ | async)">Add customer</button>
+
+  <button mat-raised-button (click)="updateCustomer()" *ngIf="selectedCustomer$ | async">Update customer</button>
+
+</mat-card>
